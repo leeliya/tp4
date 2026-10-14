@@ -7,6 +7,7 @@ pipeline {
         DOCKER_HOST = 'npipe:////./pipe/dockerDesktopLinuxEngine'
         DOCKER_CONTEXT = ''
         DOCKER_API_VERSION = ''
+        DOCKER_EXE = 'C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe'
     }
 
     stages {
@@ -43,6 +44,15 @@ pipeline {
                         dockerImage.push()
                     }
                 }
+            }
+        }
+
+        stage('Deploy image') {
+            steps {
+                bat '''
+                    "%DOCKER_EXE%" rm -f tp4-pipeline-deployed 2>NUL
+                    "%DOCKER_EXE%" run -d --name tp4-pipeline-deployed -p 8082:80 %REGISTRY%:%BUILD_NUMBER%
+                '''
             }
         }
     }
