@@ -4,6 +4,9 @@ pipeline {
     environment {
         REGISTRY = 'leeliya/tp4'
         registryCredential = 'dockerhub'
+        DOCKER_HOST = 'npipe:////./pipe/dockerDesktopLinuxEngine'
+        DOCKER_CONTEXT = ''
+        DOCKER_API_VERSION = ''
     }
 
     stages {
